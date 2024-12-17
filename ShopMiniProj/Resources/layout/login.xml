@@ -6,55 +6,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- Products Button -->
-    <Button
-        android:id="@+id/button_products"
-       android:layout_width="165dp"
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/edittext_username"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="Products"
+        android:hint="Username"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/edittext_password"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
+        android:text="Login"
         android:textColor="@color/MidnightGreen"
         android:backgroundTint="@color/colorAccent"
         android:layout_margin="8dp"
-        app:cornerRadius="16dp"/>
+        app:cornerRadius="16dp" />
 
-    <!-- Cart Button -->
+    <!-- Register Button -->
     <Button
-        android:id="@+id/button_cart"
+        android:id="@+id/button_register"
         android:layout_width="165dp"
         android:layout_height="55dp"
-        android:text="Cart"
+        android:text="Register"
         android:textColor="@color/BurntSienna"
         android:backgroundTint="@color/colorAccent"
         android:layout_margin="8dp"
-                app:cornerRadius="16dp"
-/>
-
-    <!-- About Us Button -->
-    <Button
-        android:id="@+id/button_about_us"
-        android:layout_width="165dp"
-        android:layout_height="55dp"
-        android:text="About Us"
-        android:textColor="@color/MidnightGreen"
-        android:backgroundTint="@color/colorAccent"
-        android:layout_margin="8dp"
-                app:cornerRadius="16dp"
-/>
-
-    <!-- Previous Orders Button -->
-    <Button
-        android:id="@+id/button_previous_orders"
-        android:layout_width="165dp"
-        android:layout_height="55dp"
-        android:text="Previous Orders"
-        android:textColor="@color/BurntSienna"
-        android:backgroundTint="@color/colorAccent"
-        android:layout_margin="8dp"
-        app:cornerRadius="16dp"
-/>
+        app:cornerRadius="16dp" />
 
 </LinearLayout>
-
-    

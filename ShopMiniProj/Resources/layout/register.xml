@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".RegisterActivity">
+
+    <!-- First Name Input -->
+    <EditText
+        android:id="@+id/edittext_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="First Name"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Last Name Input -->
+    <EditText
+        android:id="@+id/edittext_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Last Name"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Username Input -->
+    <EditText
+        android:id="@+id/edittext_username"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Username"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/edittext_email"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/edittext_password"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Confirm Password Input -->
+    <EditText
+        android:id="@+id/edittext_confirmpassword"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
+        android:text="Register"
+        android:textColor="@color/MidnightGreen"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp"
+        app:cornerRadius="16dp" />
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/button_cencel"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
+        android:text="cencel"
+        android:textColor="@color/BurntSienna"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp"
+        app:cornerRadius="16dp" />
+
+</LinearLayout>
