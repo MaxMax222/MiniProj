@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp"
+            android:id="@+id/aboutTxt"/>
+        </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+    <Button
+        android:id="@+id/button_contact_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="contact by phone"
+        android:textColor="@color/MidnightGreen"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp"
+        app:cornerRadius="16dp"
+            android:layout_weight="1"/>
+    <Button
+        android:id="@+id/button_contact_email"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="contact by email"
+        android:textColor="@color/BurntSienna"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp"
+        app:cornerRadius="16dp"
+            android:layout_weight="1"/>
+
+         <Button
+        android:id="@+id/button_contact_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="contacnt by sms"
+        android:textColor="@color/MidnightGreen"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp"
+        app:cornerRadius="16dp"
+            android:layout_weight="1"/>
+        </LinearLayout> 
+</LinearLayout>
+

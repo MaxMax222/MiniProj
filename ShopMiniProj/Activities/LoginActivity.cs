@@ -17,15 +17,20 @@ namespace ShopMiniProj.Activities
 	[Activity (Label = "@string/loginGreeting", Theme = "@style/AppTheme", MainLauncher =true)]			
 	public class LoginActivity : AppCompatActivity
     {
-		protected override void OnCreate (Bundle savedInstanceState)
+		Button login_btn, register_btn;
+		protected override void OnCreate(Bundle savedInstanceState)
 		{
-			base.OnCreate (savedInstanceState);
+			base.OnCreate(savedInstanceState);
 
 			// Create your application here
 			SetContentView(Resource.Layout.login);
-			var register = FindViewById<Button>(Resource.Id.button_register);
-			var intent = new Intent(this, typeof(RegisterActivity));
-			register.Click += (sender, e) => StartActivity(intent);
+			login_btn = FindViewById<Button>(Resource.Id.button_login);
+			var intent_main = new Intent(this, typeof(MainActivity));
+			login_btn.Click += (sender, e) => { StartActivity(intent_main); };
+
+			register_btn = FindViewById<Button>(Resource.Id.button_register);
+			var intent_register = new Intent(this, typeof(RegisterActivity));
+			register_btn.Click += (sender, e) => { StartActivity(intent_register); };
 		}
 	}
 }
