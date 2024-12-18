@@ -65,6 +65,19 @@
     <Compile Include="Activities\LoginActivity.cs" />
     <Compile Include="Activities\RegisterActivity.cs" />
     <Compile Include="Activities\AboutUsActivity.cs" />
+    <Compile Include="Classes\Product.cs" />
+    <Compile Include="Classes\InsulinPump.cs" />
+    <Compile Include="Classes\InsulinBottle.cs" />
+    <Compile Include="Classes\InsulinSyringe.cs" />
+    <Compile Include="Classes\Patch.cs" />
+    <Compile Include="Classes\TestStrips.cs" />
+    <Compile Include="Classes\GlucoseTabletsPack.cs" />
+    <Compile Include="Classes\Cart.cs" />
+    <Compile Include="Classes\Order.cs" />
+    <Compile Include="Classes\UserInfo.cs" />
+    <Compile Include="Classes\CardInfo.cs" />
+    <Compile Include="Classes\CartDetails.cs" />
+    <Compile Include="Classes\CartItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -112,6 +125,7 @@
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Activities\" />
+    <Folder Include="Classes\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.5" />
