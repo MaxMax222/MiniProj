@@ -10,7 +10,6 @@ namespace ShopMiniProj.Classes
         public double TotalPrice { get; set; }
         public string Description { get; set; }
         public string Manufacturer { get; set; }
-        public string Category { get; set; }
     }
 }
 

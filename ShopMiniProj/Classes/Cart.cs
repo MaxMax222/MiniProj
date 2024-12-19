@@ -4,23 +4,43 @@ using System.Linq;
 
 namespace ShopMiniProj.Classes
 {
-    public static class Cart
+    public class Cart
     {
-        private static Dictionary<Product, int> _items = new Dictionary<Product, int>();
+        // Private static field to hold the single instance
+        private static Cart _instance;
 
-        public static void AddToCart(Product product)
+        // Private dictionary to hold cart items
+        private Dictionary<CartItem, int> _items;
+
+        // Private constructor to prevent direct instantiation
+        private Cart()
+        {
+            _items = new Dictionary<CartItem, int>();
+        }
+
+        // Public method to provide global access to the instance
+        public static Cart GetInstance()
+        {
+            // Lazy initialization: create the instance only when needed
+            _instance ??= new Cart();
+            return _instance;
+        }
+
+        // Method to add a product to the cart
+        public void AddToCart(CartItem product)
         {
             if (_items.ContainsKey(product))
             {
-                _items[product] ++;
+                _items[product]++;
             }
             else
             {
-                _items.Add(product,1);
+                _items.Add(product, 1);
             }
         }
 
-        public static void RemoveAnItemFromCart(Product product)
+        // Method to remove a single item of a product from the cart
+        public void RemoveAnItemFromCart(CartItem product)
         {
             if (_items.ContainsKey(product))
             {
@@ -32,7 +52,8 @@ namespace ShopMiniProj.Classes
             }
         }
 
-        public static void RemoveAllFromCart(Product product)
+        // Method to remove all quantities of a product from the cart
+        public void RemoveAllFromCart(CartItem product)
         {
             if (_items.ContainsKey(product))
             {
@@ -40,14 +61,16 @@ namespace ShopMiniProj.Classes
             }
         }
 
-        public static Dictionary<Product, int> GetCartItems()
+        // Method to get all items in the cart
+        public Dictionary<CartItem, int> GetCartItems()
         {
-            return new Dictionary<Product, int>(_items);
+            return new Dictionary<CartItem, int>(_items);
         }
 
-        public static double CalculateTotal()
+        // Method to calculate the total cost of items in the cart
+        public double CalculateTotal()
         {
-            return _items.Sum(item => item.Key.Price * item.Value);
+            return _items.Sum(item => item.Key.TotalPrice);
         }
     }
 }
