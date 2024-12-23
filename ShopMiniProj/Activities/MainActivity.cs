@@ -23,17 +23,17 @@ namespace ShopMiniProj.Activities
 
         private void Init()
         {
-            //var intent = new Intent(this, typeof(ProductsActivity));
+            Intent products_intent = new Intent(this, typeof(ProductsActivity));
             products_btn = FindViewById<Button>(Resource.Id.button_products);
-            //products_btn.Click += (sender, e) => StartActivity(intent);
+            products_btn.Click += (sender, e) => StartActivity(products_intent);
 
             //intent = new Intent(this, typeof(CartActivity));
             cart_btn = FindViewById<Button>(Resource.Id.button_cart);
             //products_btn.Click += (sender, e) => StartActivity(intent);
 
-            var intent_about_us = new Intent(this, typeof(AboutUsActivity));
+            Intent about_us_intent = new Intent(this, typeof(AboutUsActivity));
             aboutUs_btn = FindViewById<Button>(Resource.Id.button_about_us);
-            aboutUs_btn.Click += (sender, e) => StartActivity(intent_about_us);
+            aboutUs_btn.Click += (sender, e) => StartActivity(about_us_intent);
 
             prev_orders_btn = FindViewById<Button>(Resource.Id.button_previous_orders);
             //products_btn.Click += (sender, e) => StartActivity(intent);

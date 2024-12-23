@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+   <!-- Spinner section at the top -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter by type:"
+            android:textColor="@color/colorAccent" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:popupBackground="@color/colorPrimary"
+            android:backgroundTint="@color/colorAccent"
+            android:id="@+id/products_filter_spinner" />
+
+    </LinearLayout>
+
+    <!-- ListView in the middle -->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:id="@+id/products_listView" />
+
+    <!-- Button at the bottom -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Return"
+        android:textColor="@color/MidnightGreen"
+        android:id="@+id/return_button"
+        android:layout_margin="16dp"
+        app:cornerRadius="16dp" />
+</LinearLayout>
+

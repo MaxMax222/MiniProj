@@ -14,7 +14,7 @@ using AndroidX.AppCompat.App;
 
 namespace ShopMiniProj.Activities
 {
-	[Activity (Label = "RegisterActivity")]			
+	[Activity (Label = "RegisterActivity", Theme ="@style/AppTheme")]			
 	public class RegisterActivity : AppCompatActivity
     {
 		Button cencel_btn;

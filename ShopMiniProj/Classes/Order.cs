@@ -1,27 +1,40 @@
 ﻿using System;
-using System.Text.Json;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ShopMiniProj.Classes
 {
 
     public class Order
     {
-        public readonly UserInfo User;
-        public readonly CartDetails Cart;
-        public readonly string Address;
-        public readonly string ZipCode;
+        private static int ID = 0;
+        private int orderId;
+        private UserInfo User;
+        private Dictionary<Product, int> CartItems;
+        private double TotalCost;
 
-        public Order(UserInfo user, CartDetails cart, string address, string zipCode)
+        public Order(UserInfo user, Cart cart)
         {
+            orderId = ++ID;
             User = user;
-            Cart = cart;
-            Address = address;
-            ZipCode = zipCode;
+            CartItems = cart.GetCartItems();
+            TotalCost = cart.CalculateTotal();
         }
 
-        public string ToJson()
+        // Method to serialize the object to JSON
+        public string SerializeToJson()
         {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        // Static method to deserialize from JSON to CombinedUserCart
+        public Order DeserializeFromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<Order>(json);
+        }
+        public override string ToString()
+        {
+            return $"User info: {User}, order id: {ID}";
         }
     }
 }

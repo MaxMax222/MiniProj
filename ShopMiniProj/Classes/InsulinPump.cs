@@ -2,8 +2,8 @@
 {
     public class InsulinPump : Product
     {
-        public readonly string Model;
-        public readonly string BatteryType;
+        public string Model { get; }
+        public string BatteryType { get; }
 
         public InsulinPump(int productId, double price, string description, string manufacturer, string name, string model, string batteryType)
             : base(productId, price, description, manufacturer, name, "Insulin Pump")

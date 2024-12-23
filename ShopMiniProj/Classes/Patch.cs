@@ -3,12 +3,12 @@ namespace ShopMiniProj.Classes
 {
     public class Patch : Product
     {
-        public readonly string Material;
+        public string Color { get; }
 
-        public Patch(int productId, double price, string description, string manufacturer, string name, string material)
+        public Patch(int productId, double price, string description, string manufacturer, string name, string color)
             : base(productId, price, description, manufacturer, name, "Patch")
         {
-            Material = material;
+            Color = color;
         }
     }
 }

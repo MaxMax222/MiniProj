@@ -3,11 +3,11 @@ namespace ShopMiniProj.Classes
 {
     public class UserInfo
     {
-        public readonly string Name;
-        public readonly string LastName;
-        public readonly string Username;
-        public readonly string Email;
-        public readonly CardInfo Card;
+        public string Name { get; }
+        public string LastName { get; }
+        public string Username { get; }
+        public string Email { get; }
+        public CardInfo Card { get; }
 
         public UserInfo(string name, string lastName, string username, string email, CardInfo card)
         {
@@ -16,6 +16,11 @@ namespace ShopMiniProj.Classes
             Username = username;
             Email = email;
             Card = card;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, LastName: {LastName}, Username: {Username}, Email: {Email}, Card: {Card}";
         }
     }
 }

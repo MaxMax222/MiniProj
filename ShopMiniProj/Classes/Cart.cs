@@ -10,12 +10,12 @@ namespace ShopMiniProj.Classes
         private static Cart _instance;
 
         // Private dictionary to hold cart items
-        private Dictionary<CartItem, int> _items;
+        private Dictionary<Product, int> _items;
 
         // Private constructor to prevent direct instantiation
         private Cart()
         {
-            _items = new Dictionary<CartItem, int>();
+            _items = new Dictionary<Product, int>();
         }
 
         // Public method to provide global access to the instance
@@ -27,7 +27,7 @@ namespace ShopMiniProj.Classes
         }
 
         // Method to add a product to the cart
-        public void AddToCart(CartItem product)
+        public void AddToCart(Product product)
         {
             if (_items.ContainsKey(product))
             {
@@ -40,7 +40,7 @@ namespace ShopMiniProj.Classes
         }
 
         // Method to remove a single item of a product from the cart
-        public void RemoveAnItemFromCart(CartItem product)
+        public void RemoveAnItemFromCart(Product product)
         {
             if (_items.ContainsKey(product))
             {
@@ -53,7 +53,7 @@ namespace ShopMiniProj.Classes
         }
 
         // Method to remove all quantities of a product from the cart
-        public void RemoveAllFromCart(CartItem product)
+        public void RemoveAllFromCart(Product product)
         {
             if (_items.ContainsKey(product))
             {
@@ -62,15 +62,32 @@ namespace ShopMiniProj.Classes
         }
 
         // Method to get all items in the cart
-        public Dictionary<CartItem, int> GetCartItems()
+        public Dictionary<Product, int> GetCartItems()
         {
-            return new Dictionary<CartItem, int>(_items);
+            return new Dictionary<Product, int>(_items);
         }
 
         // Method to calculate the total cost of items in the cart
         public double CalculateTotal()
         {
-            return _items.Sum(item => item.Key.TotalPrice);
+            return _items.Sum(item => item.Key.Price * item.Value);
+        }
+
+        public int GetProductAmount(Product product)
+        {
+            if (_items.ContainsKey(product))
+            {
+                return _items[product];
+            }
+            else
+            {
+                return -999;
+            }
+        }
+
+        public List<Product> GetProducts()
+        {
+            return _items.Keys.ToList();
         }
     }
 }
