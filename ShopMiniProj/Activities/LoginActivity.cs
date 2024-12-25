@@ -14,7 +14,7 @@ using AndroidX.AppCompat.App;
 
 namespace ShopMiniProj.Activities
 {
-	[Activity (Label = "@string/loginGreeting", Theme = "@style/AppTheme")]			
+	[Activity (Label = "@string/loginGreeting", Theme = "@style/AppTheme", MainLauncher = true)]			
 	public class LoginActivity : AppCompatActivity
     {
 		Button login_btn, register_btn;

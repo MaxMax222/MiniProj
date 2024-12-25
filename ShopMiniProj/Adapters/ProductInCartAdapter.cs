@@ -58,27 +58,44 @@ namespace ShopMiniProj.Adapters
             if (type == TypeOfAdapter.ForCart)
             {
                 int amount = cart.GetProductAmount(product);
-                price_textView.Text += $"{product.Price*amount}";
-                amount_textView.Text += amount;
+                price_textView.Text = $"Price: {product.Price*amount}";
+                amount_textView.Text = $"Amount: {amount}";
             }
             else
             {
                 amount_textView.Visibility = ViewStates.Gone;
-                price_textView.Text = $"{product.Price}";
+                price_textView.Text = $"Price: {product.Price}";
             }
             display_button.Tag = position;
+            display_button.Click -= Display_button_Click;
             display_button.Click += Display_button_Click;
 
-            add_button.Click += (sender, e) =>
-            {
-                cart.AddToCart(product);
-                NotifyDataSetChanged(); // Refresh the UI to show updated amount and price
-            }; remove_button.Tag = position;
+            add_button.Click -= AddButton_Click;
+            add_button.Tag = position;
+            add_button.Click += AddButton_Click;
+
+            remove_button.Tag = position;
+            remove_button.Click -= Remove_button_Click;
             remove_button.Click += Remove_button_Click;
             
             return view;
         }
 
+        // Define the handler as a method
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            int position = (int)button.Tag;
+            var product = _items[position];
+
+            cart.AddToCart(product);
+
+            Toast.MakeText(_context,
+                $"{product.Name} added to cart, there are currently {cart.GetProductAmount(product)} {product.Name}s in the cart",
+                ToastLength.Short).Show();
+
+            NotifyDataSetChanged(); // Refresh the UI to show updated amount and price
+        }
         private void Remove_button_Click(object sender, EventArgs e)
         {
             var btn = (Button)sender;
@@ -93,14 +110,29 @@ namespace ShopMiniProj.Adapters
             if (cart.GetProductAmount(item) > 1 && cart.GetProductAmount(item) != -999)
             {
                 cart.RemoveAnItemFromCart(item);
+                Toast.MakeText(_context,
+                $"removed {item.Name} from the cart, there are currently {cart.GetProductAmount(item)} {item.Name}s in the cart",
+                ToastLength.Short).Show();
             }
             else
             {
+               
+                if (cart.GetProductAmount(item) != -999)
+                {
+                    Toast.MakeText(_context,
+                $"completley removed {item.Name} from the cart",
+                ToastLength.Short).Show();
+                }
+                Toast.MakeText(_context,
+                $"{item.Name} not in cart",
+                ToastLength.Short).Show();
                 cart.RemoveAnItemFromCart(item); // Ensure item is removed from the cart
                 if (type == TypeOfAdapter.ForCart)
                 {
                     _items.RemoveAt(pos); // Remove the item from the list
-                } }
+                }
+            }
+
 
             NotifyDataSetChanged(); // Notify the adapter to refresh the UI
         }

@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:id="@+id/product_image"/>
     <ScrollView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/product_description"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"/>
     </ScrollView>
 </LinearLayout>

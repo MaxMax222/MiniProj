@@ -4504,7 +4504,10 @@ namespace ShopMiniProj
 			public const int select_dialog_singlechoice_material = 2131427390;
 			
 			// aapt resource value: 0x7F0B003F
-			public const int support_simple_spinner_dropdown_item = 2131427391;
+			public const int spinner_item = 2131427391;
+			
+			// aapt resource value: 0x7F0B0040
+			public const int support_simple_spinner_dropdown_item = 2131427392;
 			
 			static Layout()
 			{
