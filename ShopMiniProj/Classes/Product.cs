@@ -16,6 +16,23 @@
             Manufacturer = manufacturer;
             Name = name;
         }
+        // Override Equals
+        public override bool Equals(object obj)
+        {
+            if (obj is Product otherProduct)
+            {
+                // Compare by unique properties, e.g., ProductId
+                return ProductId == otherProduct.ProductId;
+            }
+            return false;
+        }
+
+        // Override GetHashCode
+        public override int GetHashCode()
+        {
+            // Use ProductId as the basis for hash code
+            return ProductId.GetHashCode();
+        }
     }
 }
 

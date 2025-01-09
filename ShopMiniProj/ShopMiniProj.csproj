@@ -79,6 +79,8 @@
     <Compile Include="Adapters\ProductInCartAdapter.cs" />
     <Compile Include="Classes\Enums.cs" />
     <Compile Include="Activities\ProductsActivity.cs" />
+    <Compile Include="Activities\CartActivity.cs" />
+    <Compile Include="Activities\MenuActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -158,12 +160,21 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\cart_screen.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Menu\menu_main.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Activities\" />
     <Folder Include="Classes\" />
     <Folder Include="Adapters\" />
+    <Folder Include="Resources\Menu\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.5" />

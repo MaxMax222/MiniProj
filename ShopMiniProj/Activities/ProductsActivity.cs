@@ -17,9 +17,8 @@ using ShopMiniProj.Classes;
 namespace ShopMiniProj.Activities
 {
 	[Activity (Label = "ProductsActivity", Theme ="@style/AppTheme")]			
-	public class ProductsActivity : AppCompatActivity
+	public class ProductsActivity : MenuActivity
 	{
-        Button return_button;
         ListView products_listview;
         Spinner filter_spinner;
         List<Product> products;
@@ -34,15 +33,12 @@ namespace ShopMiniProj.Activities
 
         private void Init()
         {
-            cart = Cart.GetInstance();
-            return_button = FindViewById<Button>(Resource.Id.return_button);
-            return_button.Click += (sender, e) => Finish();
-
             GenerateList();
             products_listview = FindViewById<ListView>(Resource.Id.products_listView);
             products_listview.Adapter = new ProductInCartAdapter(this, products, TypeOfAdapter.ForProducts);
             filter_spinner = FindViewById<Spinner>(Resource.Id.products_filter_spinner);
             SetUpFilter();
+            cart = Cart.GetInstance();
         }
 
         private void SetUpFilter()
@@ -60,7 +56,7 @@ namespace ShopMiniProj.Activities
             var filteredProducts = GetFilteredProducts(e.Position);
             products_listview.Adapter = new ProductInCartAdapter(this, filteredProducts, TypeOfAdapter.ForProducts);
 
-        }
+            }
 
         private List<Product> GetFilteredProducts(int position)
         {
@@ -85,7 +81,7 @@ namespace ShopMiniProj.Activities
                 new InsulinPump(Resource.Drawable.pump780g, 3600, "The Medtronic MiniMed 780G insulin pump is a hybrid closed-loop system that adjusts insulin delivery based on CGM data, offering automatic corrections and customizable glucose targets for improved diabetes management.", "Medtronic", "780G", "Minimed 780G", "AA"),
                 new InsulinPump(Resource.Drawable.omnipod, 1400, "The Omnipod is a tubeless insulin pump offering discreet, continuous insulin delivery. It features a wearable pod controlled via a handheld device or app, simplifying diabetes management with flexibility and convenience.", "Insulet", "omnipod","DASH pod","built-in"),
                 new InsulinSyringe(Resource.Drawable.syringe30g3ml, 0.9, "3ml 30 gauge 1/2 inch syrigne, sealed packaging for easy access.\n 30G 3ml 1/2 \"precision matching\" \n Not for professional medical use , only for industrial, or as home tools","Health inc", "3ml syringe", "30g",0.03),
-
+                            
             };
         }
     }

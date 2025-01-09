@@ -26,6 +26,7 @@ namespace ShopMiniProj.Activities
 			SetContentView(Resource.Layout.login);
 			login_btn = FindViewById<Button>(Resource.Id.button_login);
 			var intent_main = new Intent(this, typeof(MainActivity));
+			intent_main.SetFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
 			login_btn.Click += (sender, e) => { StartActivity(intent_main); };
 
 			register_btn = FindViewById<Button>(Resource.Id.button_register);

@@ -15,6 +15,7 @@ namespace ShopMiniProj.Adapters
         private Dialog dialog;
         private Cart cart;
         private TypeOfAdapter type;
+        public event Action OnCartUpdated;
         public ProductInCartAdapter(Context context, List<Product> items, TypeOfAdapter type)
         {
             _context = context;
@@ -89,6 +90,7 @@ namespace ShopMiniProj.Adapters
             var product = _items[position];
 
             cart.AddToCart(product);
+            OnCartUpdated?.Invoke();
 
             Toast.MakeText(_context,
                 $"{product.Name} added to cart, there are currently {cart.GetProductAmount(product)} {product.Name}s in the cart",
@@ -110,6 +112,7 @@ namespace ShopMiniProj.Adapters
             if (cart.GetProductAmount(item) > 1 && cart.GetProductAmount(item) != -999)
             {
                 cart.RemoveAnItemFromCart(item);
+                OnCartUpdated?.Invoke();
                 Toast.MakeText(_context,
                 $"removed {item.Name} from the cart, there are currently {cart.GetProductAmount(item)} {item.Name}s in the cart",
                 ToastLength.Short).Show();
@@ -127,6 +130,7 @@ namespace ShopMiniProj.Adapters
                 $"{item.Name} not in cart",
                 ToastLength.Short).Show();
                 cart.RemoveAnItemFromCart(item); // Ensure item is removed from the cart
+                OnCartUpdated?.Invoke();
                 if (type == TypeOfAdapter.ForCart)
                 {
                     _items.RemoveAt(pos); // Remove the item from the list

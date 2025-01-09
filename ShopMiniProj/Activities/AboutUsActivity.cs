@@ -15,7 +15,7 @@ using AndroidX.AppCompat.App;
 namespace ShopMiniProj.Activities
 {
     [Activity(Label = "AboutUsActivity", Theme = "@style/AppTheme")]
-    public class AboutUsActivity : AppCompatActivity
+    public class AboutUsActivity : MenuActivity
     {
         Button contact_phone_button, contact_email_button, contact_sms_button;
         TextView about_txt;
