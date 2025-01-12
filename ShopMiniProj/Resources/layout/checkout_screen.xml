@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    >
+
+    <!-- First Name Input -->
+    <EditText
+        android:id="@+id/edittext_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Last Name Input -->
+    <EditText
+        android:id="@+id/edittext_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Last Name"
+        android:inputType=  "textPersonName"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Email Input -->
+    <EditText
+        android:id="@+id/edittext_email"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Shipping Input -->
+    <EditText
+        android:id="@+id/edittext_shipping_adress"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Shipping Adress"
+        android:inputType="textPostalAddress"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Zip Input -->
+    <EditText
+        android:id="@+id/edittext_zip_code"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Zip Code"
+        android:inputType="number"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp" />
+
+    <!-- Add Card Button -->
+    <Button
+        android:id="@+id/button_add_card"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
+        android:text="add card"
+        android:textColor="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_margin="8dp"
+        app:cornerRadius="16dp" />
+
+    <!-- Order Button -->
+    <Button
+        android:id="@+id/button_place_order"
+        android:layout_width="165dp"
+        android:layout_height="55dp"
+        android:text="order"
+        android:textColor="@color/MidnightGreen"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="8dp"
+        app:cornerRadius="16dp" />
+
+</LinearLayout>

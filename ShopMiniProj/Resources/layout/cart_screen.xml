@@ -17,11 +17,26 @@
             android:layout_height="wrap_content"
             android:text="Total: "
             android:textColor="@color/colorAccent"
-            android:id="@+id/total"/>
+            android:id="@+id/total"
+            android:textSize="18sp"/>
         </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/products_listview_cart"/>
+        android:id="@+id/products_listview_cart"
+        android:layout_weight="0.5"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="checkout"
+            android:id="@+id/checkout_btn"
+            android:textColor="@color/MidnightGreen"
+            app:cornerRadius ="16dp"/>
+        </LinearLayout>
 </LinearLayout>
 

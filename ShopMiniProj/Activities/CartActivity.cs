@@ -22,6 +22,7 @@ namespace ShopMiniProj.Activities
 		ListView products;
 		TextView total;
 		Cart cart;
+		Button checkout_btn;
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
@@ -35,6 +36,9 @@ namespace ShopMiniProj.Activities
         {
 			products = FindViewById<ListView>(Resource.Id.products_listview_cart);
 			total = FindViewById<TextView>(Resource.Id.total);
+			checkout_btn = FindViewById<Button>(Resource.Id.checkout_btn);
+			var intent = new Intent(this, typeof(CheckoutActivity));
+			checkout_btn.Click += (sender, e) => StartActivity(intent);
 			cart = Cart.GetInstance();
 
 			var adapter = new ProductInCartAdapter(this, cart.GetProducts(), TypeOfAdapter.ForCart);

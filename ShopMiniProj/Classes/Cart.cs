@@ -89,5 +89,10 @@ namespace ShopMiniProj.Classes
         {
             return _items.Keys.ToList();
         }
+
+        public void ClearCart()
+        {
+            _items = new Dictionary<Product, int>();
+        }
     }
 }

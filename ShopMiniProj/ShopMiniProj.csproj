@@ -81,6 +81,8 @@
     <Compile Include="Activities\ProductsActivity.cs" />
     <Compile Include="Activities\CartActivity.cs" />
     <Compile Include="Activities\MenuActivity.cs" />
+    <Compile Include="Activities\CheckoutActivity.cs" />
+    <Compile Include="Classes\UserInfoForOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -165,6 +167,14 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\Menu\menu_main.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\checkout_screen.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\add_card_dialog.xml">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>

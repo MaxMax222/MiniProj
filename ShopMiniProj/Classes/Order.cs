@@ -8,15 +8,15 @@ namespace ShopMiniProj.Classes
     public class Order
     {
         private static int ID = 0;
-        private int orderId;
-        private UserInfo User;
+        public int orderId { get; };
+        private UserInfoForOrder User;
         private Dictionary<Product, int> CartItems;
         private double TotalCost;
 
-        public Order(UserInfo user, Cart cart)
+        public Order(UserInfoForOrder user, Cart cart)
         {
             orderId = ++ID;
-            User = user;
+            User =  user;
             CartItems = cart.GetCartItems();
             TotalCost = cart.CalculateTotal();
         }

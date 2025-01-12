@@ -31,7 +31,13 @@
         android:textColorHint="@color/colorPrimary"
         android:backgroundTint="@color/colorAccent"
         android:layout_margin="8dp" />
-
+      <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="remember me"
+            android:id="@+id/checkRemeber"
+            android:textColor="@color/colorPrimary"
+        />
     <!-- Login Button -->
     <Button
         android:id="@+id/button_login"
