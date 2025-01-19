@@ -36,11 +36,14 @@ namespace ShopMiniProj.Activities
         private void Init()
         {
             first_name = FindViewById<EditText>(Resource.Id.edittext_firstname);
-            first_name.Text = user.Name;
+            first_name.Text = UserInfo.GetInstance().Name;
+
             last_name = FindViewById<EditText>(Resource.Id.edittext_lastname);
-            last_name.Text = user.LastName;
+            last_name.Text = UserInfo.GetInstance().LastName;
+
             email = FindViewById<EditText>(Resource.Id.edittext_email);
-            email.Text = user.Email;
+            email.Text = UserInfo.GetInstance().Email;
+
             shipping_addres = FindViewById<EditText>(Resource.Id.edittext_shipping_adress);
             zip_code = FindViewById<EditText>(Resource.Id.edittext_zip_code);
 
@@ -50,7 +53,8 @@ namespace ShopMiniProj.Activities
             dialog_card.SetCanceledOnTouchOutside(true);
             dialog_card.SetContentView(Resource.Layout.add_card_dialog);
 
-            
+            CreateUserForOrder();
+
             cart = Cart.GetInstance();
             add_card = FindViewById<Button>(Resource.Id.button_add_card);
             add_card.Click += Add_card_Click;
@@ -60,13 +64,56 @@ namespace ShopMiniProj.Activities
 
         private void Place_order_Click(object sender, EventArgs e)
         {
-            CreateUserForOrder();
-            order = new Order(user, cart);
-            Toast.MakeText(this, $"thank for ordering! your order id is {order.orderId}", ToastLength.Long).Show();
-            cart.ClearCart();
-            var intent = new Intent(this, typeof(MainActivity));
-            intent.AddFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
-            StartActivity(intent);
+            
+            if (ValidateUser())
+            {
+                order = new Order(user, cart);
+                Toast.MakeText(this, $"thank for ordering! your order id is {order.orderId}", ToastLength.Long).Show();
+                cart.ClearCart();
+                var intent = new Intent(this, typeof(MainActivity));
+                intent.AddFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
+                StartActivity(intent);
+            }
+        }
+        private bool ValidateUser()
+        {
+            if (string.IsNullOrWhiteSpace(first_name.Text))
+            {
+                Toast.MakeText(this, "First name is required.", ToastLength.Long).Show();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(last_name.Text))
+            {
+                Toast.MakeText(this, "Last name is required.", ToastLength.Long).Show();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(email.Text))
+            {
+                Toast.MakeText(this, "Email is required.", ToastLength.Long).Show();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(shipping_addres.Text))
+            {
+                Toast.MakeText(this, "Shipping address is required.", ToastLength.Long).Show();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(zip_code.Text))
+            {
+                Toast.MakeText(this, "Zip code is required.", ToastLength.Long).Show();
+                return false;
+            }
+
+            if (card == null)
+            {
+                Toast.MakeText(this, "Pauyment method is required.", ToastLength.Long).Show();
+                return false;
+            }
+
+            return true;
         }
 
         private void CreateUserForOrder()
@@ -90,12 +137,62 @@ namespace ShopMiniProj.Activities
             add_card = dialog_card.FindViewById<Button>(Resource.Id.button_add_card);
             add_card.Click += (sender, e) =>
             {
-                CardInfo cardInfo = new CardInfo(card_number.Text, expiration_date.Text, CVV.Text);
-                user.UpdateCard(card);
-                dialog_card.Dismiss();
+                string cardNumberText = card_number.Text;
+                string expirationDateText = expiration_date.Text;
+                string CVVText = CVV.Text;
 
+                if (ValidateCardInfo(cardNumberText, expirationDateText, CVVText))
+                {
+                    card = new CardInfo(cardNumberText, expirationDateText, CVVText);
+                    user.UpdateCard(card);
+                    dialog_card.Dismiss();
+                    Toast.MakeText(this, "Card added successfully!", ToastLength.Long).Show();
+                }
             };
             dialog_card.Show();
+        }
+
+        private bool ValidateCardInfo(string cardNumber, string expirationDate, string CVV)
+        {
+            // Validate card number (should be numeric and 13-19 digits long)
+            if (string.IsNullOrWhiteSpace(cardNumber) || !cardNumber.All(char.IsDigit) || cardNumber.Length < 13 || cardNumber.Length > 19)
+            {
+                Toast.MakeText(this, "Invalid card number. Must be 13-19 digits.", ToastLength.Long).Show();
+                return false;
+            }
+
+            // Validate expiration date (MM/YY format and not expired)
+            if (string.IsNullOrWhiteSpace(expirationDate) || !Regex.IsMatch(expirationDate, @"^(0[1-9]|1[0-2])\/\d{2}$") || IsExpired(expirationDate))
+            {
+                Toast.MakeText(this, "Invalid or expired expiration date. Use MM/YY format.", ToastLength.Long).Show();
+                return false;
+            }
+
+            // Validate CVV (should be numeric and 3-4 digits)
+            if (string.IsNullOrWhiteSpace(CVV) || !CVV.All(char.IsDigit) || (CVV.Length != 3 && CVV.Length != 4))
+            {
+                Toast.MakeText(this, "Invalid CVV. Must be 3 or 4 digits.", ToastLength.Long).Show();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsExpired(string expirationDate)
+        {
+            try
+            {
+                var parts = expirationDate.Split('/');
+                int month = int.Parse(parts[0]);
+                int year = int.Parse(parts[1]) + 2000;
+
+                DateTime expiration = new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
+                return DateTime.Now > expiration;
+            }
+            catch
+            {
+                return true;
+            }
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -110,6 +207,7 @@ namespace ShopMiniProj.Activities
 
             return true;
         }
+
     }
 }
 
