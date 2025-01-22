@@ -8,7 +8,7 @@ namespace ShopMiniProj.Classes
     public class Order
     {
         private static int ID = 0;
-        public int orderId { get; };
+        public int orderId { get; }
         private UserInfoForOrder User;
         private Dictionary<Product, int> CartItems;
         private double TotalCost;
