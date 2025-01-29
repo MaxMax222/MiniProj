@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133163072459",
+    "project_id": "miniprojdb",
+    "storage_bucket": "miniprojdb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133163072459:android:7abacb73a54a367250144e",
+        "android_client_info": {
+          "package_name": "com.maxim_games.shopminiproj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz4zRgTIYXK1zgb4coezzshB-9fxN42Qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
