@@ -1,42 +1,29 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using ShopMiniProj.Classes;
 
 namespace ShopMiniProj.Activities
 {
-    [Activity(Label = "RegisterActivity", Theme = "@style/AppTheme")]
+    [Activity(Label = "Register", Theme = "@style/AppTheme")]
     public class RegisterActivity : AppCompatActivity
     {
-        // UI elements
-        private EditText _firstNameEditText;
-        private EditText _lastNameEditText;
-        private EditText _usernameEditText;
-        private EditText _emailEditText;
-        private EditText _passwordEditText;
-        private EditText _confirmPasswordEditText;
-        private Button _registerButton;
-        private Button _cancelButton;
-
-        // SharedPreferences key
-        private const string SharedPreferencesFile = "UserPreferences";
+        private EditText _firstNameEditText, _lastNameEditText, _usernameEditText, _emailEditText, _passwordEditText, _confirmPasswordEditText;
+        private Button _registerButton, _cancelButton;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Set the layout
             SetContentView(Resource.Layout.register);
-
-            // Initialize UI elements
             Init();
         }
 
         private void Init()
         {
-            // Find views
             _firstNameEditText = FindViewById<EditText>(Resource.Id.edittext_firstname);
             _lastNameEditText = FindViewById<EditText>(Resource.Id.edittext_lastname);
             _usernameEditText = FindViewById<EditText>(Resource.Id.edittext_username);
@@ -46,14 +33,12 @@ namespace ShopMiniProj.Activities
             _registerButton = FindViewById<Button>(Resource.Id.button_register);
             _cancelButton = FindViewById<Button>(Resource.Id.button_cencel);
 
-            // Set event handlers
-            _registerButton.Click += RegisterButton_Click;
-            _cancelButton.Click += (sender, e) => Finish(); // Close the activity
+            _registerButton.Click += async (sender, e) => await RegisterUser();
+            _cancelButton.Click += (sender, e) => Finish();
         }
 
-        private void RegisterButton_Click(object sender, EventArgs e)
+        private async Task RegisterUser()
         {
-            // Get input values
             string firstName = _firstNameEditText.Text.Trim();
             string lastName = _lastNameEditText.Text.Trim();
             string username = _usernameEditText.Text.Trim();
@@ -61,7 +46,6 @@ namespace ShopMiniProj.Activities
             string password = _passwordEditText.Text.Trim();
             string confirmPassword = _confirmPasswordEditText.Text.Trim();
 
-            // Validate inputs
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) ||
                 string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email) ||
                 string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
@@ -70,7 +54,7 @@ namespace ShopMiniProj.Activities
                 return;
             }
 
-            if (!IsValidEmail(email))
+            if (!Android.Util.Patterns.EmailAddress.Matcher(email).Matches())
             {
                 Toast.MakeText(this, "Please enter a valid email address.", ToastLength.Short).Show();
                 return;
@@ -82,36 +66,29 @@ namespace ShopMiniProj.Activities
                 return;
             }
 
-            // Save data to SharedPreferences
-            SaveToSharedPreferences(firstName, lastName, username, email, password);
+            if (password.Length < 6)
+            {
+                Toast.MakeText(this, "Password must be at least 6 characters long.", ToastLength.Short).Show();
+                return;
+            }
 
-            // Display success message
-            Toast.MakeText(this, "Registration successful!", ToastLength.Short).Show();
-
-            // Close the activity
-            Finish();
-        }
-
-        private void SaveToSharedPreferences(string firstName, string lastName, string username, string email, string password)
-        {
-            var sharedPreferences = GetSharedPreferences(SharedPreferencesFile, FileCreationMode.Private);
-            var editor = sharedPreferences.Edit();
-
-            // Save user data
-            editor.PutString("FirstName", firstName);
-            editor.PutString("LastName", lastName);
-            editor.PutString("Username", username);
-            editor.PutString("Email", email);
-            editor.PutString("Password", password); // Note: Storing passwords in plain text is not secure. Use encryption or secure methods in production.
-
-            // Commit changes
-            editor.Apply();
-        }
-
-        private bool IsValidEmail(string email)
-        {
-            // Basic email validation
-            return Android.Util.Patterns.EmailAddress.Matcher(email).Matches();
+            try
+            {
+                bool success = await UserInfo.Register(firstName, lastName, username, email, password);
+                if (success)
+                {
+                    Toast.MakeText(this, "Registration successful!", ToastLength.Short).Show();
+                    Finish();
+                }
+                else
+                {
+                    Toast.MakeText(this, "Registration failed. Try again.", ToastLength.Short).Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+            }
         }
     }
 }
