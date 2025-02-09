@@ -7,6 +7,8 @@ using Java.Util;
 using Android.Widget;
 using Android.Content;
 using Android.App;
+using System.Reflection.Emit;
+using System.Collections.Generic;
 
 namespace ShopMiniProj.Classes
 {
@@ -20,6 +22,8 @@ namespace ShopMiniProj.Classes
         public string LastName { get; private set; }
         public string Username { get; private set; }
         public string Email { get; private set; }
+        public string ShippingAddress { get; private set; }
+        public string ZipCode { get; private set; }
         public CardInfo Card { get; private set; }
 
         //Firebase handlers
@@ -41,27 +45,12 @@ namespace ShopMiniProj.Classes
             _instance ??= new UserInfo();
 
             return _instance;
-        }
-
-        // Method to initialize user information
-        public void Initialize(string name, string lastName, string username, string email, CardInfo card)
+        }        
+        public void UpdateShippingDetails(string shippingAddress, string zipCode)
         {
-            if (string.IsNullOrEmpty(Name) && string.IsNullOrEmpty(LastName) && string.IsNullOrEmpty(Username) && string.IsNullOrEmpty(Email) && Card == null)
-            {
-                Name = name;
-                LastName = lastName;
-                Username = username;
-                Email = email;
-                Card = card;
-            }
+            ShippingAddress = shippingAddress;
+            ZipCode = zipCode;
         }
-
-        // Method to retrieve user information
-        public string GetUserInfo()
-        {
-            return $"Name: {Name}, LastName: {LastName}, Username: {Username}, Email: {Email}, Card: {Card}";
-        }
-
         public void SetCard(CardInfo card)
         {
             Card = card;
@@ -76,6 +65,7 @@ namespace ShopMiniProj.Classes
             }
             catch (Exception Ex)
             {
+                Toast.MakeText(Application.Context, Ex.Message, ToastLength.Long);
                 return false;
             }
             return true;
@@ -109,6 +99,34 @@ namespace ShopMiniProj.Classes
                 return false;
             }
             return true;
+        }
+
+
+        // Method to retrieve user information
+        public async Task FetchUserData()
+        {
+            try
+            {
+                var docRef = database.Collection(COLLECTION_NAME).Document(FirebaseAuth.CurrentUser.Uid);
+                var snapshot = await docRef.Get().AsAsync<DocumentSnapshot>();
+                if (snapshot.Exists()) 
+                {
+                    var data = snapshot.Data;
+                    if (data != null)
+                    {
+                        Name = data.ContainsKey("firstName") ? data["firstName"].ToString() : "no name";
+                        LastName = data.ContainsKey("lastName") ? data["lastName"].ToString() : "no last name";
+                        Email = data.ContainsKey("email") ? data["email"].ToString() : "no email";
+                        Username = data.ContainsKey("username") ? data["username"].ToString() : "no username";
+                        ShippingAddress = data.ContainsKey("shippingAdress") ? data["shippingAdress"].ToString() : "no shippingAdress";
+                        ZipCode = data.ContainsKey("zipCode") ? data["zipCode"].ToString() : "no zipCode";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+            }
         }
     }
 }

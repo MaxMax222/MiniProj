@@ -82,7 +82,6 @@
     <Compile Include="Activities\CartActivity.cs" />
     <Compile Include="Activities\MenuActivity.cs" />
     <Compile Include="Activities\CheckoutActivity.cs" />
-    <Compile Include="Classes\UserInfoForOrder.cs" />
     <Compile Include="Classes\FirebaseHelper.cs" />
   </ItemGroup>
   <ItemGroup>

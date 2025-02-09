@@ -79,6 +79,7 @@ namespace ShopMiniProj.Activities
             {
                 if (await UserInfo.Login(enteredEmail, enteredPassword))
                 {
+                    _ = user.FetchUserData();
                     SaveUserPreferences(enteredEmail, enteredPassword);
                     NavigateToMain();
                 }

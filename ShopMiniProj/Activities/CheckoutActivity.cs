@@ -22,7 +22,7 @@ namespace ShopMiniProj.Activities
         CardInfo card;
         Dialog dialog_card;
         Cart cart;
-        UserInfoForOrder user;
+        UserInfo user;
         Order order;
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
@@ -33,27 +33,29 @@ namespace ShopMiniProj.Activities
 			Init();
 		}
 
-        private void Init()
+        private async void Init()
         {
+            user = UserInfo.GetInstance();
+            await user.FetchUserData();
+
             first_name = FindViewById<EditText>(Resource.Id.edittext_firstname);
-            first_name.Text = UserInfo.GetInstance().Name;
+            first_name.Text = user.Name;
 
             last_name = FindViewById<EditText>(Resource.Id.edittext_lastname);
-            last_name.Text = UserInfo.GetInstance().LastName;
+            last_name.Text = user.LastName;
 
             email = FindViewById<EditText>(Resource.Id.edittext_email);
-            email.Text = UserInfo.GetInstance().Email;
+            email.Text = user.Email;
 
             shipping_addres = FindViewById<EditText>(Resource.Id.edittext_shipping_adress);
-            zip_code = FindViewById<EditText>(Resource.Id.edittext_zip_code);
+            shipping_addres.Text = user.ShippingAddress != "no shippingAdress" ? user.ShippingAddress : "";
 
-            
+            zip_code = FindViewById<EditText>(Resource.Id.edittext_zip_code);
+            zip_code.Text = user.ZipCode != "no zipCode" ? user.ZipCode : "";
 
             dialog_card = new Dialog(this);
             dialog_card.SetCanceledOnTouchOutside(true);
             dialog_card.SetContentView(Resource.Layout.add_card_dialog);
-
-            CreateUserForOrder();
 
             cart = Cart.GetInstance();
             add_card = FindViewById<Button>(Resource.Id.button_add_card);
@@ -62,17 +64,20 @@ namespace ShopMiniProj.Activities
             place_order.Click += Place_order_Click;
         }
 
-        private void Place_order_Click(object sender, EventArgs e)
+        private async void Place_order_Click(object sender, EventArgs e)
         {
             
             if (ValidateUser())
             {
-                order = new Order(user, cart);
-                Toast.MakeText(this, $"thank for ordering! your order id is {order.orderId}", ToastLength.Long).Show();
-                cart.ClearCart();
-                var intent = new Intent(this, typeof(MainActivity));
-                intent.AddFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
-                StartActivity(intent);
+                order = new Order(cart);
+                if (await order.PlaceOrder())
+                {
+                    Toast.MakeText(this, $"thank for ordering! your order id is {order.orderId}", ToastLength.Long).Show();
+                    cart.ClearCart();
+                    var intent = new Intent(this, typeof(MainActivity));
+                    intent.AddFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
+                    StartActivity(intent);
+                }
             }
         }
         private bool ValidateUser()
@@ -109,24 +114,13 @@ namespace ShopMiniProj.Activities
 
             if (card == null)
             {
-                Toast.MakeText(this, "Pauyment method is required.", ToastLength.Long).Show();
+                Toast.MakeText(this, "Payment method is required.", ToastLength.Long).Show();
                 return false;
             }
 
             return true;
         }
 
-        private void CreateUserForOrder()
-        {
-            string firstNameText = first_name.Text;
-            string lastNameText = last_name.Text;
-            string emailText = email.Text;
-            string shippingAddressText = shipping_addres.Text;
-            string zipCodeText = zip_code.Text;
-
-            user = new UserInfoForOrder(firstNameText, lastNameText, UserInfo.GetInstance().Username, emailText, null, shippingAddressText, zipCodeText);
-
-        }
             private void Add_card_Click(object sender, EventArgs e)
         {
             EditText card_number, expiration_date, CVV;
@@ -144,7 +138,7 @@ namespace ShopMiniProj.Activities
                 if (ValidateCardInfo(cardNumberText, expirationDateText, CVVText))
                 {
                     card = new CardInfo(cardNumberText, expirationDateText, CVVText);
-                    user.UpdateCard(card);
+                    user.SetCard(card);
                     dialog_card.Dismiss();
                     Toast.MakeText(this, "Card added successfully!", ToastLength.Long).Show();
                 }

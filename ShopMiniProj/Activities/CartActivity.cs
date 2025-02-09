@@ -38,9 +38,21 @@ namespace ShopMiniProj.Activities
 			total = FindViewById<TextView>(Resource.Id.total);
 			checkout_btn = FindViewById<Button>(Resource.Id.checkout_btn);
 			var intent = new Intent(this, typeof(CheckoutActivity));
-			checkout_btn.Click += (sender, e) => StartActivity(intent);
+			checkout_btn.Click += (sender, e) =>
+			{
+				if (cart.GetCartItems().Count > 0)
+				{
+					StartActivity(intent);
+				}
+				else
+				{
+					Toast.MakeText(this, "Please add items", ToastLength.Short);
+				}
+            };
+          
 			cart = Cart.GetInstance();
 
+			
 			var adapter = new ProductInCartAdapter(this, cart.GetProducts(), TypeOfAdapter.ForCart);
 			adapter.OnCartUpdated += UpdateTotal;
 			products.Adapter = adapter;
