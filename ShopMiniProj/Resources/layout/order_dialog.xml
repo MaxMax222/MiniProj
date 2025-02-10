@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    android:gravity="center"
+    >
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:id="@+id/display_order_listView"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         app:cornerRadius="16dp"
+        android:id="@+id/add_order"
+        android:text="order again"
+        android:textColor="@color/MidnightGreen"/>
+</LinearLayout>
+

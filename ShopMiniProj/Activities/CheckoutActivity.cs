@@ -69,6 +69,7 @@ namespace ShopMiniProj.Activities
             
             if (ValidateUser())
             {
+                user.UpdateShippingDetails(shippingAddress: shipping_addres.Text, zipCode: zip_code.Text);
                 order = new Order(cart);
                 if (await order.PlaceOrder())
                 {

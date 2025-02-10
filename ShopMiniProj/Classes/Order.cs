@@ -14,7 +14,6 @@ namespace ShopMiniProj.Classes
 
     public class Order
     {
-        private static int ID = 0;
         public string orderId { get; }
         private UserInfo User;
         private Dictionary<Product, int> CartItems;
@@ -26,7 +25,7 @@ namespace ShopMiniProj.Classes
         {
             database = FirebaseHelper.GetFirestore();
             FirebaseAuth = FirebaseHelper.GetFirebaseAuthentication();
-            orderId = FirebaseAuth.CurrentUser.Uid +$": {++ID}";
+            orderId = FirebaseAuth.CurrentUser.Uid + " " + DateTime.Now.ToString();
             User = UserInfo.GetInstance();
             CartItems = cart.GetCartItems();
             
@@ -62,7 +61,8 @@ namespace ShopMiniProj.Classes
                 {"cardInfo", GetCardInfo()},
                 {"shippingAdress", User.ShippingAddress},
                 {"zipCode", User.ZipCode},
-                {"totalPrice", Cart.GetInstance().CalculateTotal()}
+                {"totalPrice", Cart.GetInstance().CalculateTotal()},
+                {"timeOfOrder", DateTime.Now.ToString()}
             };
 
             try
