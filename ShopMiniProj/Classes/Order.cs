@@ -8,6 +8,8 @@ using Android.Widget;
 using Firebase.Auth;
 using Firebase.Firestore;
 using Newtonsoft.Json;
+using Java.Util;
+using static Android.Content.ClipData;
 
 namespace ShopMiniProj.Classes
 {
@@ -25,69 +27,78 @@ namespace ShopMiniProj.Classes
         {
             database = FirebaseHelper.GetFirestore();
             FirebaseAuth = FirebaseHelper.GetFirebaseAuthentication();
-            orderId = FirebaseAuth.CurrentUser.Uid + " " + DateTime.Now.ToString();
+            orderId = FirebaseAuth.CurrentUser.Uid + "/UserOrders/ " + DateTime.Now.ToString().Replace("/","-");
             User = UserInfo.GetInstance();
             CartItems = cart.GetCartItems();
             
         }
 
         // Method to convert cart items to data for firebase
-        private JavaDictionary<string, Java.Lang.Object> CreateDataForFirebase()
+        private HashMap CreateDataOfProducts()
         {
-            JavaDictionary<string, Java.Lang.Object> data = new JavaDictionary<string, Java.Lang.Object>();
+            HashMap data = new HashMap();
             foreach (KeyValuePair<Product, int> product in CartItems)
             {
-                // Create a dictionary for each product
-                JavaDictionary<string, Java.Lang.Object> item = new JavaDictionary<string, Java.Lang.Object>
-                {
-                    { "price", product.Key.Price },
-                    { "quantity", product.Value },
-                    { "totalPrice", product.Value * product.Key.Price }
-                };
-                data.Add(product.Key.Name, item);
+                // Create a map for each product
+                HashMap item = new HashMap();
+
+                item.Put("price", product.Key.Price);
+                item.Put( "quantity", product.Value);
+                item.Put( "manufacturer", product.Key.Manufacturer);
+                item.Put("description", product.Key.Description);
+                item.Put("productID", product.Key.ProductId);
+                item.Put( "totalPrice", product.Value * product.Key.Price);
+                
+                data.Put(product.Key.Name, item);
             }
             return data;
         }
 
         public async Task<bool> PlaceOrder()
         {
-            Dictionary<string, Java.Lang.Object> data = new Dictionary<string, Java.Lang.Object>()
-            {   {"firstName", User.Name},
-                {"lastName", User.LastName},
-                {"email", User.Email },
-                {"userName", User.Username},
-                {"orderId" , orderId},
-                {"orderInfo", CreateDataForFirebase()},
-                {"cardInfo", GetCardInfo()},
-                {"shippingAdress", User.ShippingAddress},
-                {"zipCode", User.ZipCode},
-                {"totalPrice", Cart.GetInstance().CalculateTotal()},
-                {"timeOfOrder", DateTime.Now.ToString()}
-            };
-
+            HashMap data = new HashMap();
+               data.Put("firstName", User.Name);
+                data.Put( "lastName", User.LastName);
+                data.Put( "email", User.Email);
+                data.Put( "userName", User.Username);
+                data.Put( "orderId" , orderId.Replace("/UserOrders/",""));
+                data.Put( "cardInfo", GetCardInfo());
+                data.Put( "shippingAdress", User.ShippingAddress);
+                data.Put( "zipCode", User.ZipCode);
+                data.Put( "totalPrice", Cart.GetInstance().CalculateTotal());
+                data.Put( "timeOfOrder", DateTime.Now.ToString());
             try
             {
+                
                 var orderReference = database.Collection(COLLECTION_NAME).Document(orderId);
                 await orderReference.Set(data);
+                var products = CreateDataOfProducts();
+                foreach (var product in products.KeySet())
+                {
+                    var productsReference = database.Collection(COLLECTION_NAME)
+                        .Document(orderId)
+                        .Collection("products")
+                        .Document(product.ToString());
+                    await productsReference.Set(products.Get((Java.Lang.Object)product));
+                    
+                }
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long).Show();
                 return false;
             }
             return true;
 
         }
 
-        private JavaDictionary<string, Java.Lang.Object> GetCardInfo()
+        private HashMap GetCardInfo()
         {
-            return new JavaDictionary<string, Java.Lang.Object>()
-            {
-                {"cardNumber", User.Card.HashedCardNumber},
-                {"experationDate", User.Card.HashedExpirationDate},
-                {"cvv",User.Card.HashedCVV}
-
-            };
+            HashMap cardData = new HashMap();
+            cardData.Put("hashedNumber", User.Card.HashedCardNumber);
+            cardData.Put("hashedExeperationDate", User.Card.HashedExpirationDate);
+            cardData.Put("hashedCVV", User.Card.HashedCVV);
+            return cardData;
         }
     }
 }

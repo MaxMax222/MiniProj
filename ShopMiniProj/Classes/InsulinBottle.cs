@@ -6,7 +6,7 @@
         public  string Type { get; }// e.g., "Rapid-Acting," "Long-Acting"
 
         public InsulinBottle(int productId, double price, string description, string manufacturer, string name, double volume, string type)
-            : base(productId, price, description, manufacturer, name, "Insulin Bottle")
+            : base(productId, price, description, manufacturer, name)
         {
             Volume = volume;
             Type = type;

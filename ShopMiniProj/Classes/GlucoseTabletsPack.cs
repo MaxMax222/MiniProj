@@ -7,7 +7,7 @@ namespace ShopMiniProj.Classes
         public double TabletStrength { get; }// e.g., mg of glucose per tablet
 
         public GlucoseTabletPack(int productId, double price, string description, string manufacturer, string name, int tabletsPerPack, double tabletStrength)
-            : base(productId, price, description, manufacturer, name, "Glucose Tablet")
+            : base(productId, price, description, manufacturer, name)
         {
             TabletsPerPack = tabletsPerPack;
             TabletStrength = tabletStrength;

@@ -94,5 +94,20 @@ namespace ShopMiniProj.Classes
         {
             _items = new Dictionary<Product, int>();
         }
+
+        public void AddProducts(Dictionary<Product,int> products)
+        {
+            foreach (KeyValuePair<Product,int> product in products)
+            {
+                if (_items.ContainsKey(product.Key))
+                {
+                    _items[product.Key]+=product.Value;
+                }
+                else
+                {
+                    _items.Add(product.Key, product.Value);
+                }
+            }
+        }
     }
 }

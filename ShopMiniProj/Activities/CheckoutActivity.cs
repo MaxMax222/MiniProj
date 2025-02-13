@@ -123,7 +123,7 @@ namespace ShopMiniProj.Activities
         }
 
             private void Add_card_Click(object sender, EventArgs e)
-        {
+            {
             EditText card_number, expiration_date, CVV;
             Button add_card;
             card_number = dialog_card.FindViewById<EditText>(Resource.Id.edittxt_card_num);

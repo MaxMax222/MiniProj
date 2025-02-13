@@ -39,8 +39,10 @@ namespace ShopMiniProj.Activities
             aboutUs_btn = FindViewById<Button>(Resource.Id.button_about_us);
             aboutUs_btn.Click += (sender, e) => StartActivity(about_us_intent);
 
+
+            Intent previous_orders_intent = new Intent(this, typeof(PreviousOrdersActivity));
             prev_orders_btn = FindViewById<Button>(Resource.Id.button_previous_orders);
-            //products_btn.Click += (sender, e) => StartActivity(intent);
+            prev_orders_btn.Click += (sender, e) => StartActivity(previous_orders_intent);
 
         }
         public override bool OnCreateOptionsMenu(IMenu menu)

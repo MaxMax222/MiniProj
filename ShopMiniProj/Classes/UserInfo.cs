@@ -9,6 +9,8 @@ using Android.Content;
 using Android.App;
 using System.Reflection.Emit;
 using System.Collections.Generic;
+using Android.Runtime;
+using Newtonsoft.Json;
 
 namespace ShopMiniProj.Classes
 {
@@ -24,6 +26,7 @@ namespace ShopMiniProj.Classes
         public string Email { get; private set; }
         public string ShippingAddress { get; private set; }
         public string ZipCode { get; private set; }
+        public List<OrderInfo> prev_orders { get; private set; }
         public CardInfo Card { get; private set; }
 
         //Firebase handlers
@@ -45,7 +48,7 @@ namespace ShopMiniProj.Classes
             _instance ??= new UserInfo();
 
             return _instance;
-        }        
+        }
         public void UpdateShippingDetails(string shippingAddress, string zipCode)
         {
             ShippingAddress = shippingAddress;
@@ -65,11 +68,26 @@ namespace ShopMiniProj.Classes
             }
             catch (Exception Ex)
             {
-                Toast.MakeText(Application.Context, Ex.Message, ToastLength.Long);
+                Toast.MakeText(Application.Context, Ex.Message, ToastLength.Long).Show();
                 return false;
             }
             return true;
         }
+
+        public bool SignOut()
+        {
+            try
+            {
+                FirebaseAuth.SignOut();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long).Show();
+                return false;
+            }
+            return true;
+        }
+
 
         public static async Task<bool> Register(string firstName, string lastName, string username, string email, string password)
         {
@@ -95,7 +113,7 @@ namespace ShopMiniProj.Classes
             }
             catch (Exception Ex)
             {
-                Toast.MakeText(Application.Context, Ex.Message, ToastLength.Long);
+                Toast.MakeText(Application.Context, Ex.Message, ToastLength.Long).Show();
                 return false;
             }
             return true;
@@ -109,7 +127,7 @@ namespace ShopMiniProj.Classes
             {
                 var docRef = database.Collection(COLLECTION_NAME).Document(FirebaseAuth.CurrentUser.Uid);
                 var snapshot = await docRef.Get().AsAsync<DocumentSnapshot>();
-                if (snapshot.Exists()) 
+                if (snapshot.Exists())
                 {
                     var data = snapshot.Data;
                     if (data != null)
@@ -122,11 +140,35 @@ namespace ShopMiniProj.Classes
                         ZipCode = data.ContainsKey("zipCode") ? data["zipCode"].ToString() : "no zipCode";
                     }
                 }
+
+                await FetchUserOrders();
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long).Show();
+            }
+        }
+
+        private async Task FetchUserOrders()
+        {
+            prev_orders = new List<OrderInfo>();
+            var ordersRef = database.Collection("orders").Document(FirebaseAuth.CurrentUser.Uid).Collection("UserOrders");
+            var snapshot = await ordersRef.Get().AsAsync<QuerySnapshot>();
+
+            foreach (var doc in snapshot.Documents)
+            {
+                var orderData = doc.Data;
+
+                //parse basic fields
+                var orderId = orderData["orderId"].ToString();
+                var totalPrice = Convert.ToDouble(orderData["totalPrice"].ToString());
+                var timeOfOrder = DateTime.Parse(orderData["timeOfOrder"].ToString());
+
+                //TODO parse each product
+                
+
             }
         }
     }
 }
+    

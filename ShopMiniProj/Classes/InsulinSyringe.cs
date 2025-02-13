@@ -7,7 +7,7 @@ namespace ShopMiniProj.Classes
         public double Capacity { get; } // e.g., in ml
 
         public InsulinSyringe(int productId, double price, string description, string manufacturer, string name, string needleGauge, double capacity)
-            : base(productId, price, description, manufacturer, name, "Insulin Syringe")
+            : base(productId, price, description, manufacturer, name)
         {
             NeedleGauge = needleGauge;
             Capacity = capacity;

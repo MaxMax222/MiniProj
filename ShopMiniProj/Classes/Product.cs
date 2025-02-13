@@ -8,7 +8,7 @@
         public string Manufacturer { get; protected set; }
         public string Name { get; protected set; }
 
-        public Product(int productId, double price, string description, string manufacturer, string name, string category)
+        public Product(int productId, double price, string description, string manufacturer, string name)
         {
             ProductId = productId;
             Price = price;

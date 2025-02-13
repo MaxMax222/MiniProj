@@ -11,10 +11,9 @@
 
     <!-- Left side: Image and Text -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="1"
         android:gravity="center_vertical">
 
         <ImageView
@@ -45,14 +44,5 @@
                 android:id="@+id/amount_txt" />
         </LinearLayout>
     </LinearLayout>
-
-    <!-- Right side: Display Info Button -->
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Display Info"
-        android:textColor="@color/MidnightGreen"
-        android:id="@+id/display_button_top"
-        app:cornerRadius="16dp"/>
 
 </LinearLayout>
