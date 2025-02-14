@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using ShopMiniProj.Classes;
 
 namespace ShopMiniProj.Activities
 {
@@ -42,6 +43,7 @@ namespace ShopMiniProj.Activities
                     Finish();
                         return true;
                 case Resource.Id.menu_logout:
+                    UserInfo.GetInstance().SignOut();
                     var intentLogOut = new Intent(this, typeof(LoginActivity));
                     intentLogOut.SetFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
                     StartActivity(intentLogOut);

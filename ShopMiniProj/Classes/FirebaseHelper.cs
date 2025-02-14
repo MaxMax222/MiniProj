@@ -14,7 +14,7 @@ namespace ShopMiniProj.Classes
         const string API_KEY = "AIzaSyBz4zRgTIYXK1zgb4coezzshB-9fxN42Qk";
 
         static FirebaseFirestore database;
-        public static FirebaseFirestore GetFirestore() => database == null ? FirebaseFirestore.GetInstance(RetriveApp()) : database;
+        public static FirebaseFirestore GetFirestore() => database ?? FirebaseFirestore.GetInstance(RetriveApp());
 
         public static FirebaseAuth GetFirebaseAuthentication() => FirebaseAuth.Instance;
 

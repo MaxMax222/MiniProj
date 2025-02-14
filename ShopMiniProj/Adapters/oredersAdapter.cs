@@ -77,6 +77,7 @@ namespace ShopMiniProj.Adapters
             var order = _orders[pos];
 
             var listview = dialog.FindViewById<ListView>(Resource.Id.display_order_listView);
+            listview.Adapter = new ItemsInOrderAdapter(_context, order.GetProducts(), order);
             var add_to_cart = dialog.FindViewById<Button>(Resource.Id.add_order);
             add_to_cart.Click += (sender, e) => { Cart.GetInstance().AddProducts(order.products); };
             dialog.Show();

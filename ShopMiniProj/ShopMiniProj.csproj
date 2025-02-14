@@ -86,6 +86,7 @@
     <Compile Include="Activities\PreviousOrdersActivity.cs" />
     <Compile Include="Classes\OrderInfo.cs" />
     <Compile Include="Adapters\oredersAdapter.cs" />
+    <Compile Include="Adapters\ItemsInOrderAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

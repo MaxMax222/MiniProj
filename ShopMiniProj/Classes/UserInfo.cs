@@ -167,7 +167,7 @@ namespace ShopMiniProj.Classes
                     var timeOfOrder = DateTime.Parse(orderData["timeOfOrder"].ToString());
                     var productsDict = new Dictionary<Product, int>();
 
-                    //TODO parse each product
+                    //parse each product
                     var productsRef = doc.Reference.Collection("products");
                     var productsSnapshot = await productsRef.Get().AsAsync<QuerySnapshot>();
                     foreach (var product in productsSnapshot.Documents)

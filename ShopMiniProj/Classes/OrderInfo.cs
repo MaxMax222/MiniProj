@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using static Android.Content.ClipData;
+
 namespace ShopMiniProj.Classes
 {
 	public class OrderInfo
@@ -15,7 +18,10 @@ namespace ShopMiniProj.Classes
 			OrderID = orderID;
 			DateOfOrder = date;
 		}
-
-	}
+        public List<Product> GetProducts()
+        {
+            return products.Keys.ToList();
+        }
+    }
 }
 
