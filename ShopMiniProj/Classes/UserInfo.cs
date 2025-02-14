@@ -152,21 +152,43 @@ namespace ShopMiniProj.Classes
         private async Task FetchUserOrders()
         {
             prev_orders = new List<OrderInfo>();
-            var ordersRef = database.Collection("orders").Document(FirebaseAuth.CurrentUser.Uid).Collection("UserOrders");
-            var snapshot = await ordersRef.Get().AsAsync<QuerySnapshot>();
-
-            foreach (var doc in snapshot.Documents)
+            try
             {
-                var orderData = doc.Data;
+                var ordersRef = database.Collection("orders").Document(FirebaseAuth.CurrentUser.Uid).Collection("UserOrders");
+                var snapshot = await ordersRef.Get().AsAsync<QuerySnapshot>();
 
-                //parse basic fields
-                var orderId = orderData["orderId"].ToString();
-                var totalPrice = Convert.ToDouble(orderData["totalPrice"].ToString());
-                var timeOfOrder = DateTime.Parse(orderData["timeOfOrder"].ToString());
+                foreach (var doc in snapshot.Documents)
+                {
+                    var orderData = doc.Data;
 
-                //TODO parse each product
-                
+                    //parse basic fields
+                    var orderId = orderData["orderId"].ToString();
+                    var totalPrice = Convert.ToDouble(orderData["totalPrice"].ToString());
+                    var timeOfOrder = DateTime.Parse(orderData["timeOfOrder"].ToString());
+                    var productsDict = new Dictionary<Product, int>();
 
+                    //TODO parse each product
+                    var productsRef = doc.Reference.Collection("products");
+                    var productsSnapshot = await productsRef.Get().AsAsync<QuerySnapshot>();
+                    foreach (var product in productsSnapshot.Documents)
+                    {
+                        var productData = product.Data;
+                        var productForDict = new Product
+                           (
+                           productId: int.Parse(productData["productID"].ToString()),
+                           name: product.Id,
+                           description: productData["description"].ToString(),
+                           price: double.Parse(productData["price"].ToString()),
+                           manufacturer: productData["manufacturer"].ToString()
+                           );
+                        productsDict.Add(productForDict, int.Parse(productData["quantity"].ToString()));
+                    }
+                    prev_orders.Add(new OrderInfo(productsDict, totalPrice, orderId, timeOfOrder));
+                }
+            }
+            catch(Exception ex)
+            {
+                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long).Show();
             }
         }
     }
